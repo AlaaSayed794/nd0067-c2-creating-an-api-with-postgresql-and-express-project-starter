@@ -1,11 +1,6 @@
 import { User, UserStore } from '../user';
 const store = new UserStore();
 
-function delayFunction() {
-  return new Promise(function(resolve) {
-    setTimeout(resolve, 3000);
-  });
-}
 describe('User Model', () => {
   const newUser: User = {
     first_name: 'testUser',
@@ -34,11 +29,9 @@ describe('User Model', () => {
     expect(result.first_name).toEqual(createdUser.first_name);
     expect(result.last_name).toEqual(createdUser.last_name);
     expect(result.id).toEqual(createdUser.id);
-    await delayFunction();
   });
 
   it('index method should return a list of users', async () => {
-    await delayFunction();
     const result = await store.index();
     expect(result.length).toBe(1);
     expect(result[0].first_name).toEqual(createdUser.first_name);
@@ -47,7 +40,6 @@ describe('User Model', () => {
   });
 
   it('show method should return the correct user', async () => {
-    await delayFunction();
     const result = await store.show('1');
     expect(result.first_name).toEqual(createdUser.first_name);
     expect(result.last_name).toEqual(createdUser.last_name);
