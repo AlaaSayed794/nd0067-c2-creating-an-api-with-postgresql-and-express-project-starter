@@ -4,10 +4,12 @@
   "description": "",
   "main": "server.ts",
   "scripts": {
-    "start": "node src/server.ts",
+    "start": "nodemon src/server.ts",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess 'node ./dist/server.js'",
     "test": "export NODE_ENV=test|| set NODE_ENV=test&& db-migrate --config ./database.json --e test up && jasmine-ts && db-migrate down --config ./database.json --e test",
     "tsc": "tsc",
+    "dev-startdb": "db-migrate up --config ./database.json --e dev",
+    "dev-resetdb": "db-migrate down --config ./database.json --e dev",
     "test-teardown": "db-migrate down --config ./database.json --e test",
     "lint": "eslint . --ext .ts",
     "prettier": "prettier --config .prettierrc {,!(node_modules)/**/}*.ts --write"
