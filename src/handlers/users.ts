@@ -21,8 +21,8 @@ const show = async (req: Request, res: Response) => {
 const create = async (req: Request, res: Response) => {
   try {
     const user: User = {
-      email: req.body.email,
-      user_name: req.body.user_name,
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
       password: req.body.password
     };
 
@@ -30,8 +30,8 @@ const create = async (req: Request, res: Response) => {
     const token = jwt.sign(
       {
         user: {
-          email: newUser.email,
-          user_name: newUser.user_name,
+          first_name: newUser.first_name,
+          last_name: newUser.last_name,
           id: newUser.id
         }
       },
