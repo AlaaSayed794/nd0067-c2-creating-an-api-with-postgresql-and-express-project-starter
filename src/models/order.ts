@@ -76,8 +76,8 @@ export class OrderStore {
 
   async addProduct(
     quantity: number,
-    orderId: string,
-    productId: string
+    orderId: number,
+    productId: number
   ): Promise<Order> {
     try {
       const ordersql = 'SELECT * FROM orders WHERE id=($1)';
@@ -112,6 +112,36 @@ export class OrderStore {
       throw new Error(
         `Could not add product ${productId} to order ${orderId}: ${err}`
       );
+    }
+  }
+
+  async getUserOrders(user_id: number): Promise<Order[]> {
+    try {
+      const conn = await Client.connect();
+      const sql = 'SELECT * FROM orders WHERE user_id=' + user_id;
+
+      const result = await conn.query(sql);
+
+      conn.release();
+
+      return result.rows;
+    } catch (err) {
+      throw new Error(`Could not get orders. Error: ${err}`);
+    }
+  }
+  async setOrderStatus(id: number, status: string): Promise<Order> {
+    try {
+      const conn = await Client.connect();
+      const sql = 'UPDATE orders SET status=$1 WHERE id=$2 RETURNING *';
+      const result = await conn.query(sql, [status, id]);
+
+      const order = result.rows[0];
+
+      conn.release();
+
+      return order;
+    } catch (err) {
+      throw new Error(`Could not update order ${id}. ${err}`);
     }
   }
 }

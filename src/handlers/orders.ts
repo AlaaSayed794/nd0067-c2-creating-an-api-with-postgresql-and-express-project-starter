@@ -35,13 +35,36 @@ const destroy = async (req: Request, res: Response) => {
 };
 
 const addProduct = async (req: Request, res: Response) => {
-  const orderId: string = req.params.id;
-  const productId: string = req.body.product_id;
-  const quantity: number = parseInt(req.body.quantity);
-
   try {
+    const orderId: number = parseInt(req.params.id);
+    const productId: number = parseInt(req.body.product_id);
+    const quantity: number = parseInt(req.body.quantity);
     const addedProduct = await store.addProduct(quantity, orderId, productId);
     res.json(addedProduct);
+  } catch (err) {
+    res.status(400);
+    res.json(err);
+  }
+};
+
+const getUserOrders = async (req: Request, res: Response) => {
+  const userId: number = parseInt(req.params.id);
+
+  try {
+    const addedProduct = await store.getUserOrders(userId);
+    res.json(addedProduct);
+  } catch (err) {
+    res.status(400);
+    res.json(err);
+  }
+};
+
+const setOrderStatus = async (req: Request, res: Response) => {
+  try {
+    const orderId: number = parseInt(req.params.id);
+    const status: string = req.body.status;
+    const order = await store.setOrderStatus(orderId, status);
+    res.json(order);
   } catch (err) {
     res.status(400);
     res.json(err);
@@ -54,6 +77,8 @@ const orderRoutes = (app: express.Application): void => {
   app.post('/orders', create);
   app.delete('/orders', destroy);
   app.post('/orders/:id/products', addProduct);
+  app.get('/users/:id/orders', getUserOrders);
+  app.patch('orders/:id', setOrderStatus);
 };
 
 export default orderRoutes;
