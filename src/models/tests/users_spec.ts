@@ -50,6 +50,17 @@ describe('User Model', () => {
     expect(result.id).toEqual(createdUser.id);
   });
 
+  it('authenticate method should return the correct user', async () => {
+    const result = (await uStore.authenticate(
+      newUser.user_name,
+      newUser.password
+    )) as User;
+    expect(result.user_name).toEqual(createdUser.user_name);
+    expect(result.first_name).toEqual(createdUser.first_name);
+    expect(result.last_name).toEqual(createdUser.last_name);
+    expect(result.id).toEqual(createdUser.id);
+  });
+
   it('delete method should remove the user', async () => {
     uStore.delete('1');
     const result = await uStore.index();

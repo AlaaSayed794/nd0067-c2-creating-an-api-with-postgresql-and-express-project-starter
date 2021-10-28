@@ -99,7 +99,6 @@ export class UserStore {
     const conn = await Client.connect();
 
     const result = await conn.query(sql, [user_name]);
-    console.log(result.rows);
     conn.release();
 
     if (result.rows.length) {
