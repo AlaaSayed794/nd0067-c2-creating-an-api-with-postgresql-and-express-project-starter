@@ -6,6 +6,13 @@ export type Order = {
   user_id: number;
 };
 
+export type OrderProduct = {
+  id?: number;
+  quantity: number;
+  product_id: number;
+  order_id: number;
+};
+
 export class OrderStore {
   async index(): Promise<Order[]> {
     try {
@@ -59,8 +66,10 @@ export class OrderStore {
 
   async delete(id: string): Promise<Order> {
     try {
-      const sql = 'DELETE FROM orders WHERE id=($1)';
+      const sql = 'DELETE FROM orders WHERE id=($1) RETURNING *';
+      const sql2 = 'DELETE FROM order_products WHERE order_id=($1) RETURNING *';
       const conn = await Client.connect();
+      await conn.query(sql2, [id]);
 
       const result = await conn.query(sql, [id]);
 
@@ -78,7 +87,7 @@ export class OrderStore {
     quantity: number,
     orderId: number,
     productId: number
-  ): Promise<Order> {
+  ): Promise<OrderProduct> {
     try {
       const ordersql = 'SELECT * FROM orders WHERE id=($1)';
       const conn = await Client.connect();
@@ -103,7 +112,7 @@ export class OrderStore {
 
       const result = await conn.query(sql, [quantity, orderId, productId]);
 
-      const order = result.rows[0];
+      const order: OrderProduct = result.rows[0];
 
       conn.release();
 
@@ -114,6 +123,7 @@ export class OrderStore {
       );
     }
   }
+
 
   async getUserOrders(user_id: number): Promise<Order[]> {
     try {
