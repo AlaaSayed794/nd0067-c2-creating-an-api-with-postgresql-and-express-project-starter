@@ -10,7 +10,7 @@ export function authenticate(
   next: NextFunction
 ): void {
   const openRequests: boolean =
-    req.path == '/authenticate' ||
+    req.path == '/authenticate' || req.path == '/' ||
     (req.method == 'GET' && req.path.startsWith('/products'));
 
   if (openRequests) return next();
@@ -23,6 +23,5 @@ export function authenticate(
   } catch (err) {
     res.status(401);
     res.json('Access denied, invalid token');
-    return next();
   }
 }

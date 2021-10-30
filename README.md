@@ -35,6 +35,4 @@ TOKEN_SECRET=yourSecret
 ### 3. QA and `README.md`
 
 - to run tests for database run `npm run test-db`
-  if testing resulted in an error (which shouldn't happen if everything is setup correctly), reset test environment by running `npm run test-db-teardown`
-
 - to run tests for routes run `npm run test-routes`

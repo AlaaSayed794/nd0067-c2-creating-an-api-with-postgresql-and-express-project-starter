@@ -39,8 +39,7 @@ export class UserStore {
       return user;
     } catch (err) {
       throw new Error(
-        `Could not add new user ${u.first_name} ${u.last_name} . Error: ${
-          (err as Error).message
+        `Could not add new user ${u.first_name} ${u.last_name} . Error: ${(err as Error).message
         }`
       );
     }
@@ -50,10 +49,10 @@ export class UserStore {
     user_name: string,
     password: string
   ): Promise<User | null> {
-    const sql = 'SELECT * FROM users WHERE user_name=($1)';
+    const sql = `SELECT * FROM users WHERE user_name='${user_name}'`;
     const conn = await Client.connect();
 
-    const result = await conn.query(sql, [user_name]);
+    const result = await conn.query(sql);
     conn.release();
 
     if (result.rows.length) {

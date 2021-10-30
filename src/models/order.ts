@@ -29,8 +29,7 @@ export class OrderStore {
       return order;
     } catch (err) {
       throw new Error(
-        `Could not add new order to user ${o.user_id} . Error: ${
-          (err as Error).message
+        `Could not add new order to user ${o.user_id} . Error: ${(err as Error).message
         }`
       );
     }
@@ -72,8 +71,7 @@ export class OrderStore {
       return order;
     } catch (err) {
       throw new Error(
-        `Could not add product ${productId} to order ${orderId}: ${
-          (err as Error).message
+        `Could not add product ${productId} to order ${orderId}: ${(err as Error).message
         }`
       );
     }

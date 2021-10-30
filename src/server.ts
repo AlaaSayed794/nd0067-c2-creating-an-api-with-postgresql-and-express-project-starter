@@ -10,15 +10,15 @@ const address = '0.0.0.0:3000';
 app.use(bodyParser.json());
 app.all('*', authenticate);
 
-app.get('/', function(_req: Request, res: Response) {
-  res.send('Hello World!');
+app.get('/', function (_req: Request, res: Response) {
+  res.sendFile(__dirname + '/views/index.html');
 });
 
 userRoutes(app);
 productRoutes(app);
 orderRoutes(app);
 
-app.listen(3000, function() {
+app.listen(3000, function () {
   const msg: string = 'starting app on: ' + address;
   console.log(msg);
 });

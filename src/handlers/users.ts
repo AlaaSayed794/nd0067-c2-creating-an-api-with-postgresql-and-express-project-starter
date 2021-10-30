@@ -21,6 +21,7 @@ const create = async (req: Request, res: Response) => {
     const token = jwt.sign(
       {
         user: {
+          user_name: newUser.user_name,
           first_name: newUser.first_name,
           last_name: newUser.last_name,
           id: newUser.id
@@ -35,14 +36,23 @@ const create = async (req: Request, res: Response) => {
 };
 
 const authenticate = async (req: Request, res: Response) => {
-  const user = (await store.authenticate(
-    req.body.user_name,
-    req.body.password
-  )) as User;
+
   try {
-    const u = await store.authenticate(user.user_name, user.password);
-    const token = jwt.sign({ user: u }, process.env.TOKEN_SECRET as Secret);
-    res.json(token);
+    const user = (await store.authenticate(
+      req.body.user_name,
+      req.body.password
+    )) as User;
+    const token = jwt.sign(
+      {
+        user: {
+          user_name: user.user_name,
+          first_name: user.first_name,
+          last_name: user.last_name,
+          id: user.id
+        }
+      },
+      tokenSecret as string
+    ); res.json(token);
   } catch (error) {
     res.status(401);
     res.json({ error: 'incorrect user and/or password' });
