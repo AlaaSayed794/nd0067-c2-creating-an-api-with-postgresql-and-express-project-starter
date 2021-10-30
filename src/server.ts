@@ -3,11 +3,12 @@ import bodyParser from 'body-parser';
 import userRoutes from './handlers/users';
 import productRoutes from './handlers/products';
 import orderRoutes from './handlers/orders';
-
+import { authenticate } from './middlewares/authentication';
 const app: express.Application = express();
 const address = '0.0.0.0:3000';
 
 app.use(bodyParser.json());
+app.all('*', authenticate);
 
 app.get('/', function(_req: Request, res: Response) {
   res.send('Hello World!');

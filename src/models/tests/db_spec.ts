@@ -23,20 +23,18 @@ describe('User Model', () => {
   const createdProduct: Product = { ...newProduct, id: 1 };
 
   const newOrder: Order = {
-    status: "active",
+    status: 'active',
     user_id: 1
-  }
+  };
   const createdOrder: Order = { ...newOrder, id: 1 };
 
   const newOrderProduct: OrderProduct = {
     quantity: 20,
     order_id: createdOrder.id as number,
     product_id: createdProduct.id as number
-
-  }
+  };
 
   describe('User Model', () => {
-
     it('should have an index method', () => {
       expect(uStore.index).toBeDefined();
     });
@@ -47,10 +45,6 @@ describe('User Model', () => {
 
     it('should have a create method', () => {
       expect(uStore.create).toBeDefined();
-    });
-
-    it('should have a delete method', () => {
-      expect(uStore.delete).toBeDefined();
     });
 
     it('create method should add a user', async () => {
@@ -88,17 +82,9 @@ describe('User Model', () => {
       expect(result.last_name).toEqual(createdUser.last_name);
       expect(result.id).toEqual(createdUser.id);
     });
-
-    it('delete method should remove the user', async () => {
-      await uStore.delete('1');
-      const result = await uStore.index();
-
-      expect(result).toEqual([]);
-    });
   });
 
   describe('Product Model', () => {
-
     it('should have an index method', () => {
       expect(pStore.index).toBeDefined();
     });
@@ -152,18 +138,11 @@ describe('User Model', () => {
       ALTER SEQUENCE users_id_seq RESTART WITH 1;
       DELETE FROM products;
       ALTER SEQUENCE products_id_seq RESTART WITH 1;
-      `
+      `;
       await conn.query(sql);
-      await uStore.create(newUser)
-      await pStore.create(newProduct)
+      await uStore.create(newUser);
+      await pStore.create(newProduct);
       conn.release();
-    });
-    it('should have an index method', () => {
-      expect(oStore.index).toBeDefined();
-    });
-
-    it('should have a show method', () => {
-      expect(oStore.show).toBeDefined();
     });
 
     it('should have a create method', () => {
@@ -189,16 +168,12 @@ describe('User Model', () => {
       expect(result[0].id).toEqual(createdOrder.id);
     });
 
-    it('show method should return the correct order', async () => {
-      const result = await oStore.show('1');
-      expect(result.user_id).toEqual(createdOrder.user_id);
-      expect(result.status).toEqual(createdOrder.status);
-      expect(result.id).toEqual(createdOrder.id);
-      expect(result.id).toEqual(createdUser.id);
-    });
-
     it('addProduct method should return the new order product item', async () => {
-      const result = await oStore.addProduct(newOrderProduct.quantity, newOrderProduct.order_id, newOrderProduct.product_id);
+      const result = await oStore.addProduct(
+        newOrderProduct.quantity,
+        newOrderProduct.order_id,
+        newOrderProduct.product_id
+      );
       expect(result.id).toEqual(1);
       expect(result.order_id).toEqual(newOrderProduct.order_id);
       expect(result.product_id).toEqual(newOrderProduct.product_id);
@@ -214,13 +189,14 @@ describe('User Model', () => {
     });
 
     it('setOrderStatus method should update the order status', async () => {
-      const result = await oStore.setOrderStatus(createdOrder.id as number, "complete");
+      const result = await oStore.setOrderStatus(
+        createdOrder.id as number,
+        'complete'
+      );
       expect(result.user_id).toEqual(createdOrder.user_id);
       expect(result.status).toEqual('complete');
       expect(result.id).toEqual(createdOrder.id);
     });
-
-
 
     it('delete method should remove the order', async () => {
       await oStore.delete('1');
@@ -228,6 +204,5 @@ describe('User Model', () => {
 
       expect(result).toEqual([]);
     });
-  })
-
+  });
 });

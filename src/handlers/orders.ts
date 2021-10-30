@@ -3,16 +3,6 @@ import { Order, OrderStore } from '../models/order';
 
 const store = new OrderStore();
 
-const index = async (_req: Request, res: Response) => {
-  const orders = await store.index();
-  res.json(orders);
-};
-
-const show = async (req: Request, res: Response) => {
-  const order = await store.show(req.params.id);
-  res.json(order);
-};
-
 const create = async (req: Request, res: Response) => {
   try {
     const order: Order = {
@@ -72,8 +62,6 @@ const setOrderStatus = async (req: Request, res: Response) => {
 };
 
 const orderRoutes = (app: express.Application): void => {
-  app.get('/orders', index);
-  app.get('/orders/:id', show);
   app.post('/orders', create);
   app.delete('/orders', destroy);
   app.post('/orders/:id/products', addProduct);
