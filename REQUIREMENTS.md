@@ -22,7 +22,7 @@
 
 ## Data Shapes
 #### Product
--  id
+- id
 - name
 - price
 #### User
@@ -34,8 +34,12 @@
 
 #### Orders
 - id
-- id of each product in the order
-- quantity of each product in the order
 - user_id
 - status of order (active or complete)
+
+#### Order products
+- id
+- product_id
+- order_id
+- quantity of each product in the order
 
