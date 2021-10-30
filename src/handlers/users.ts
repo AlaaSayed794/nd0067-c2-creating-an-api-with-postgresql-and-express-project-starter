@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import { User, UserStore } from '../models/user';
-import jwt, { Secret } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -36,7 +36,6 @@ const create = async (req: Request, res: Response) => {
 };
 
 const authenticate = async (req: Request, res: Response) => {
-
   try {
     const user = (await store.authenticate(
       req.body.user_name,
@@ -52,7 +51,8 @@ const authenticate = async (req: Request, res: Response) => {
         }
       },
       tokenSecret as string
-    ); res.json(token);
+    );
+    res.json(token);
   } catch (error) {
     res.status(401);
     res.json({ error: 'incorrect user and/or password' });

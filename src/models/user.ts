@@ -39,7 +39,8 @@ export class UserStore {
       return user;
     } catch (err) {
       throw new Error(
-        `Could not add new user ${u.first_name} ${u.last_name} . Error: ${(err as Error).message
+        `Could not add new user ${u.first_name} ${u.last_name} . Error: ${
+          (err as Error).message
         }`
       );
     }
