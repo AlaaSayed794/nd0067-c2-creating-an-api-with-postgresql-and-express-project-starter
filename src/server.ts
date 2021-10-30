@@ -22,3 +22,5 @@ app.listen(3000, function() {
   const msg: string = 'starting app on: ' + address;
   console.log(msg);
 });
+
+export default app;
