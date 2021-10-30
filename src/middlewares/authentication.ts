@@ -19,9 +19,10 @@ export function authenticate(
     const authorizationHeader = req.headers.authorization as string;
     const token = authorizationHeader.split(' ')[1];
     jwt.verify(token, ourToken);
+    return next();
   } catch (err) {
     res.status(401);
     res.json('Access denied, invalid token');
+    return next();
   }
-  next();
 }

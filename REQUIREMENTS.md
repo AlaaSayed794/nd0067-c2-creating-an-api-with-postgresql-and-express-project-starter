@@ -5,11 +5,8 @@
  parameters: {user_name,password}
 
 #### Users
-- Index (/users) GET [token required]
-- Show (users/:id) GET [token required]
 - Create (/users) POST [token required]
  parameters: {user_name,first_name, last_name, password}
-- Delete (/users/:id) DELETE [token required]
 - Current Order by user(/users/:id/orders) GET [token required]
 
 #### Products
@@ -17,13 +14,12 @@
 - Show (/products/:id) GET 
 - Create (/products) POST [token required]
  parameters:{name, price} 
-- DELETE (/products) DELETE [token required]
 
 #### Orders
-- Index (/orders) GET [token required] 
 - Create (/orders) POST [token required]
-- Delete (/orders) DELETE [token required]
 - Set status (/orders/:id) PATCH [token required]
+- Add product (/orders/:id) POST [token required]
+
 ## Data Shapes
 #### Product
 -  id

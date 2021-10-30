@@ -15,13 +15,8 @@ const create = async (req: Request, res: Response) => {
     res.json(newOrder);
   } catch (err) {
     res.status(400);
-    res.json(err);
+    res.json((err as Error).message);
   }
-};
-
-const destroy = async (req: Request, res: Response) => {
-  const deleted = await store.delete(req.body.id);
-  res.json(deleted);
 };
 
 const addProduct = async (req: Request, res: Response) => {
@@ -33,7 +28,7 @@ const addProduct = async (req: Request, res: Response) => {
     res.json(addedProduct);
   } catch (err) {
     res.status(400);
-    res.json(err);
+    res.json((err as Error).message);
   }
 };
 
@@ -45,7 +40,7 @@ const getUserOrders = async (req: Request, res: Response) => {
     res.json(addedProduct);
   } catch (err) {
     res.status(400);
-    res.json(err);
+    res.json((err as Error).message);
   }
 };
 
@@ -57,16 +52,15 @@ const setOrderStatus = async (req: Request, res: Response) => {
     res.json(order);
   } catch (err) {
     res.status(400);
-    res.json(err);
+    res.json((err as Error).message);
   }
 };
 
 const orderRoutes = (app: express.Application): void => {
   app.post('/orders', create);
-  app.delete('/orders', destroy);
-  app.post('/orders/:id/products', addProduct);
+  app.post('/orders/:id', addProduct);
   app.get('/users/:id/orders', getUserOrders);
-  app.patch('orders/:id', setOrderStatus);
+  app.patch('/orders/:id', setOrderStatus);
 };
 
 export default orderRoutes;

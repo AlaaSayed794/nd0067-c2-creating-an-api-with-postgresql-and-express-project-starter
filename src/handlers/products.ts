@@ -10,7 +10,11 @@ const index = async (_req: Request, res: Response) => {
 
 const show = async (req: Request, res: Response) => {
   const product = await store.show(req.params.id);
-  res.json(product);
+  if (product) {
+    res.json(product);
+  } else {
+    res.status(404).json('product not found');
+  }
 };
 
 const create = async (req: Request, res: Response) => {
@@ -25,20 +29,14 @@ const create = async (req: Request, res: Response) => {
     res.json(newProduct);
   } catch (err) {
     res.status(400);
-    res.json(err);
+    res.json((err as Error).message);
   }
-};
-
-const destroy = async (req: Request, res: Response) => {
-  const deleted = await store.delete(req.body.id);
-  res.json(deleted);
 };
 
 const productRoutes = (app: express.Application): void => {
   app.get('/products', index);
   app.get('/products/:id', show);
   app.post('/products', create);
-  app.delete('/products', destroy);
 };
 
 export default productRoutes;

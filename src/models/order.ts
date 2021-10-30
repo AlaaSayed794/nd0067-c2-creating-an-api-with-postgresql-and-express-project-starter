@@ -14,21 +14,6 @@ export type OrderProduct = {
 };
 
 export class OrderStore {
-  async index(): Promise<Order[]> {
-    try {
-      const conn = await Client.connect();
-      const sql = 'SELECT * FROM orders';
-
-      const result = await conn.query(sql);
-
-      conn.release();
-
-      return result.rows;
-    } catch (err) {
-      throw new Error(`Could not get orders. Error: ${err}`);
-    }
-  }
-
   async create(o: Order): Promise<Order> {
     try {
       const sql =
@@ -44,27 +29,10 @@ export class OrderStore {
       return order;
     } catch (err) {
       throw new Error(
-        `Could not add new order to user ${o.user_id} . Error: ${err}`
+        `Could not add new order to user ${o.user_id} . Error: ${
+          (err as Error).message
+        }`
       );
-    }
-  }
-
-  async delete(id: string): Promise<Order> {
-    try {
-      const sql = 'DELETE FROM orders WHERE id=($1) RETURNING *';
-      const sql2 = 'DELETE FROM order_products WHERE order_id=($1) RETURNING *';
-      const conn = await Client.connect();
-      await conn.query(sql2, [id]);
-
-      const result = await conn.query(sql, [id]);
-
-      const order = result.rows[0];
-
-      conn.release();
-
-      return order;
-    } catch (err) {
-      throw new Error(`Could not delete order ${id}. Error: ${err}`);
     }
   }
 
@@ -87,7 +55,7 @@ export class OrderStore {
 
       conn.release();
     } catch (err) {
-      throw new Error(`${err}`);
+      throw new Error(`${(err as Error).message}`);
     }
 
     try {
@@ -104,7 +72,9 @@ export class OrderStore {
       return order;
     } catch (err) {
       throw new Error(
-        `Could not add product ${productId} to order ${orderId}: ${err}`
+        `Could not add product ${productId} to order ${orderId}: ${
+          (err as Error).message
+        }`
       );
     }
   }
@@ -120,7 +90,7 @@ export class OrderStore {
 
       return result.rows;
     } catch (err) {
-      throw new Error(`Could not get orders. Error: ${err}`);
+      throw new Error(`Could not get orders. Error: ${(err as Error).message}`);
     }
   }
   async setOrderStatus(id: number, status: string): Promise<Order> {
@@ -135,7 +105,9 @@ export class OrderStore {
 
       return order;
     } catch (err) {
-      throw new Error(`Could not update order ${id}. ${err}`);
+      throw new Error(
+        `Could not update order ${id}. ${(err as Error).message}`
+      );
     }
   }
 }

@@ -35,37 +35,16 @@ describe('User Model', () => {
   };
 
   describe('User Model', () => {
-    it('should have an index method', () => {
-      expect(uStore.index).toBeDefined();
-    });
-
-    it('should have a show method', () => {
-      expect(uStore.show).toBeDefined();
-    });
-
     it('should have a create method', () => {
       expect(uStore.create).toBeDefined();
     });
 
+    it('should have an authenticate method', () => {
+      expect(uStore.authenticate).toBeDefined();
+    });
+
     it('create method should add a user', async () => {
       const result = await uStore.create(newUser);
-      expect(result.user_name).toEqual(createdUser.user_name);
-      expect(result.first_name).toEqual(createdUser.first_name);
-      expect(result.last_name).toEqual(createdUser.last_name);
-      expect(result.id).toEqual(createdUser.id);
-    });
-
-    it('index method should return a list of users', async () => {
-      const result = await uStore.index();
-      expect(result.length).toBe(1);
-      expect(result[0].user_name).toEqual(createdUser.user_name);
-      expect(result[0].first_name).toEqual(createdUser.first_name);
-      expect(result[0].last_name).toEqual(createdUser.last_name);
-      expect(result[0].id).toEqual(createdUser.id);
-    });
-
-    it('show method should return the correct user', async () => {
-      const result = await uStore.show('1');
       expect(result.user_name).toEqual(createdUser.user_name);
       expect(result.first_name).toEqual(createdUser.first_name);
       expect(result.last_name).toEqual(createdUser.last_name);
@@ -97,10 +76,6 @@ describe('User Model', () => {
       expect(pStore.create).toBeDefined();
     });
 
-    it('should have a delete method', () => {
-      expect(pStore.delete).toBeDefined();
-    });
-
     it('create method should add a product', async () => {
       const result = await pStore.create(newProduct);
       expect(result.name).toEqual(createdProduct.name);
@@ -122,13 +97,6 @@ describe('User Model', () => {
       expect(result.price).toEqual(createdProduct.price);
       expect(result.id).toEqual(createdProduct.id);
     });
-
-    it('delete method should remove the product', async () => {
-      await pStore.delete('1');
-      const result = await pStore.index();
-
-      expect(result).toEqual([]);
-    });
   });
 
   describe('Order Model', () => {
@@ -149,23 +117,11 @@ describe('User Model', () => {
       expect(oStore.create).toBeDefined();
     });
 
-    it('should have a delete method', () => {
-      expect(oStore.delete).toBeDefined();
-    });
-
     it('create method should add an order', async () => {
       const result = await oStore.create(newOrder);
       expect(result.user_id).toEqual(createdOrder.user_id);
       expect(result.status).toEqual(createdOrder.status);
       expect(result.id).toEqual(createdOrder.id);
-    });
-
-    it('index method should return a list of orders', async () => {
-      const result = await oStore.index();
-      expect(result.length).toBe(1);
-      expect(result[0].user_id).toEqual(createdOrder.user_id);
-      expect(result[0].status).toEqual(createdOrder.status);
-      expect(result[0].id).toEqual(createdOrder.id);
     });
 
     it('addProduct method should return the new order product item', async () => {
@@ -196,13 +152,6 @@ describe('User Model', () => {
       expect(result.user_id).toEqual(createdOrder.user_id);
       expect(result.status).toEqual('complete');
       expect(result.id).toEqual(createdOrder.id);
-    });
-
-    it('delete method should remove the order', async () => {
-      await oStore.delete('1');
-      const result = await oStore.index();
-
-      expect(result).toEqual([]);
     });
   });
 });

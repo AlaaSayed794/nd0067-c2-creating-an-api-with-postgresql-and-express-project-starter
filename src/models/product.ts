@@ -18,7 +18,9 @@ export class ProductStore {
 
       return result.rows;
     } catch (err) {
-      throw new Error(`Could not get products. Error: ${err}`);
+      throw new Error(
+        `Could not get products. Error: ${(err as Error).message}`
+      );
     }
   }
 
@@ -30,10 +32,12 @@ export class ProductStore {
       const result = await conn.query(sql, [id]);
 
       conn.release();
-
+      console.log(result.rows[0]);
       return result.rows[0];
     } catch (err) {
-      throw new Error(`Could not find product ${id}. Error: ${err}`);
+      throw new Error(
+        `Could not find product ${id}. Error: ${(err as Error).message}`
+      );
     }
   }
 
@@ -51,23 +55,9 @@ export class ProductStore {
 
       return product;
     } catch (err) {
-      throw new Error(`Could not add new product ${p.name} . Error: ${err}`);
-    }
-  }
-
-  async delete(id: string): Promise<Product> {
-    try {
-      const sql = 'DELETE FROM products WHERE id=($1) RETURNING *';
-      const conn = await Client.connect();
-
-      const result = await conn.query(sql, [id]);
-
-      const product = result.rows[0];
-      conn.release();
-
-      return product;
-    } catch (err) {
-      throw new Error(`Could not delete product ${id}. Error: ${err}`);
+      throw new Error(
+        `Could not add new product ${p.name} . Error: ${(err as Error).message}`
+      );
     }
   }
 }
