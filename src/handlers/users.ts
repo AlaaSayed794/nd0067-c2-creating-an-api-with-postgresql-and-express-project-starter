@@ -16,7 +16,6 @@ const create = async (req: Request, res: Response) => {
       last_name: req.body.last_name,
       password: req.body.password
     };
-    console.log(user);
 
     const newUser = await store.create(user);
     const token = jwt.sign(

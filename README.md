@@ -29,7 +29,12 @@ TOKEN_SECRET=yourSecret
 ### 2. API endpoints
 - check REQUIREMENTS.md
 
+### 3. Authentication
+- on user creation or successful authentication, user is provided a token, make sure to add this as a bearer token in authorization for routes that require authentication to work correctly
+
 ### 3. QA and `README.md`
 
-to run tests run `npm run test`
-if testing resulted in an error (which shouldn't happen if everything is setup correctly), reset test environment by running `npm run test-teardown`
+- to run tests for database run `npm run test-db`
+  if testing resulted in an error (which shouldn't happen if everything is setup correctly), reset test environment by running `npm run test-db-teardown`
+
+- to run tests for routes run `npm run test-routes`

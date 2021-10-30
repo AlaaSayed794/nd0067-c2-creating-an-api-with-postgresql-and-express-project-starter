@@ -32,7 +32,6 @@ export class ProductStore {
       const result = await conn.query(sql, [id]);
 
       conn.release();
-      console.log(result.rows[0]);
       return result.rows[0];
     } catch (err) {
       throw new Error(
