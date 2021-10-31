@@ -83,6 +83,7 @@ Referenced by:
  id      | integer      |           | not null | nextval('orders_id_seq'::regclass)
  status  | order_status |           | not null |
  user_id | integer      |           | not null |
+ 
 Indexes:
     "orders_pkey" PRIMARY KEY, btree (id)
 Foreign-key constraints:
