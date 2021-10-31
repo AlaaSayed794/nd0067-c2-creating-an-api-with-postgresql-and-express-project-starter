@@ -47,8 +47,9 @@
 ## Data schema
 
 #### User
+
    Column   |          Type          | Collation | Nullable |              Default
-------------+------------------------+-----------+----------+-----------------------------------
+------------|------------------------|-----------|----------|-----------------------------------
  id         | integer                |           | not null | nextval('users_id_seq'::regclass)
  user_name  | character varying(64)  |           | not null |
  first_name | character varying(64)  |           | not null |
@@ -62,8 +63,9 @@ Referenced by:
     TABLE "orders" CONSTRAINT "orders_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id)
 
 #### Product
+
  Column |         Type          | Collation | Nullable |               Default
---------+-----------------------+-----------+----------+--------------------------------------
+--------|-----------------------|-----------|----------|--------------------------------------
  id     | integer               |           | not null | nextval('products_id_seq'::regclass)
  name   | character varying(64) |           | not null |
  price  | integer               |           | not null |
@@ -77,7 +79,7 @@ Referenced by:
 #### Order
 
  Column  |     Type     | Collation | Nullable |              Default
----------+--------------+-----------+----------+------------------------------------
+---------|--------------|-----------|----------|------------------------------------
  id      | integer      |           | not null | nextval('orders_id_seq'::regclass)
  status  | order_status |           | not null |
  user_id | integer      |           | not null |
@@ -91,7 +93,7 @@ Referenced by:
 #### Order products
 
    Column   |  Type   | Collation | Nullable |                  Default
-------------+---------+-----------+----------+--------------------------------------------
+------------|---------|-----------|----------|--------------------------------------------
  id         | integer |           | not null | nextval('order_products_id_seq'::regclass)
  quantity   | integer |           | not null |
  order_id   | integer |           | not null |
